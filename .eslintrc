@@ -19,9 +19,9 @@
       "error",
       {
         "singleQuote": true,
-        "semi": false,
         "trailingComma": "all"
       }
-    ]
+    ],
+    "no-param-reassign": "off"
   }
 }
