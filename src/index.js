@@ -10,10 +10,8 @@ class LRU {
    * @param {Int} params.limitLength size limit (in bytes) including keys and values of the cache
    * @memberof LRU
    */
-  constructor({ limitLength = 100 } = {}) {
-    this.params = {
-      limitLength,
-    };
+  constructor({ limitSize = 100 } = {}) {
+    this.limitSize = limitSize;
     this.map = new Map();
     this.list = new DoubleLinkedList();
   }
@@ -25,8 +23,9 @@ class LRU {
   }
   pop() {
     const toRemove = this.list.rpop();
-    debug(`key "${this.getNodeKey(toRemove)}" removed from cache`);
-    this.map.delete(this.constructor.getNodeKey(toRemove));
+    const key = this.constructor.getNodeKey(toRemove);
+    debug(`key "${key}" removed from cache`);
+    this.map.delete(key);
   }
   bump(key) {
     const node = this.getNode(key);
@@ -44,7 +43,7 @@ class LRU {
     let node;
     debug(`trying to add ${key} to the cache`);
     if (!this.hasKey(key)) {
-      if (this.list.length >= this.limitLength) {
+      if (this.limitSize && this.list.length >= this.limitSize) {
         debug(`hit cache limit when inserting "${key}"`);
         this.pop();
       }
@@ -59,12 +58,19 @@ class LRU {
   }
   add(...args) {
     // if only one argument and it has iterator then assume we are passed several key/value pair to cache
-    if (args.length === 1 && args[0][Symbol.iterator] === 'function') {
+    if (args.length === 1 && typeof args[0][Symbol.iterator] === 'function') {
       // cache each key/value pair and return an array of all the nodes stored in the cache
-      return args.map(([key, value]) => this.addSinglePair(key, value));
+      return [...args[0]].map(([key, value]) => this.addSinglePair(key, value));
     }
     // assume we only got one key/value and cache it
     return this.addSinglePair(...args);
+  }
+  delete(key) {
+    const node = this.getNode(key);
+    if (node) {
+      this.list.remove(node);
+      this.map.delete(key);
+    }
   }
   get(key) {
     const cachedNode = this.getNode(key);
@@ -75,6 +81,24 @@ class LRU {
   }
   size() {
     return this.map.size;
+  }
+  mostRecentKey() {
+    return this.constructor.getNodeKey(this.list.first());
+  }
+  leastRecentKey() {
+    return this.constructor.getNodeKey(this.list.last());
+  }
+  mostRecentValue() {
+    return this.constructor.getNodeValue(this.list.first());
+  }
+  leastRecentValue() {
+    return this.constructor.getNodeValue(this.list.last());
+  }
+  mostRecent() {
+    return this.list.first();
+  }
+  leastRecent() {
+    return this.list.last();
   }
   static getNodeValue(node) {
     return node.data[1];
