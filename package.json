@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "simple LRU cache implementation in nodejs",
   "license": "MIT",
-  "repository": "glebedel/node-lru",
+  "repository": "glebedel/js-last-recently-used-cache",
   "main": "index.js",
   "author": {
     "name": "Guillaume",
@@ -46,7 +46,10 @@
   "keywords": [
     "lru-node"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "debug": "^3.1.0",
+    "js-doublelinkedlist": "^1.0.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^8.0.0",

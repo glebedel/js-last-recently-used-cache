@@ -2,9 +2,9 @@
 
 [![Generated with nod](https://img.shields.io/badge/generator-nod-2196F3.svg?style=flat-square)](https://github.com/diegohaz/nod)
 [![NPM version](https://img.shields.io/npm/v/lru-node.svg?style=flat-square)](https://npmjs.org/package/lru-node)
-[![Build Status](https://img.shields.io/travis/glebedel/node-lru/master.svg?style=flat-square)](https://travis-ci.org/glebedel/node-lru) [![Coverage Status](https://img.shields.io/codecov/c/github/glebedel/node-lru/master.svg?style=flat-square)](https://codecov.io/gh/glebedel/node-lru/branch/master)
+[![Build Status](https://img.shields.io/travis/glebedel/js-last-recently-used-cache/master.svg?style=flat-square)](https://travis-ci.org/glebedel/js-last-recently-used-cache) [![Coverage Status](https://img.shields.io/codecov/c/github/glebedel/js-last-recently-used-cache/master.svg?style=flat-square)](https://codecov.io/gh/glebedel/js-last-recently-used-cache/branch/master)
 
-simple LRU cache implementation in nodejs
+simple LRU cache implementation in javascript
 
 ## Install
 
