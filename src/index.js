@@ -1,13 +1,18 @@
 const DoubleLinkedList = require('js-doublelinkedlist');
 const debug = require('debug')('js-lru');
 
+/**
+ * @classdesc Last Recently Used cache.
+ * @classdesc add: O(1)
+ * @classdesc get: O(1)
+ * @classdesc delete: O(1)
+ */
 class LRU {
   /**
    * Creates an instance of LRU.
    * @constructs LRU
    * @param {Object} params parameter objects
-   * @param {Int} params.limitSize size limit (in bytes) including keys and values of the cache
-   * @param {Int} params.limitLength size limit (in bytes) including keys and values of the cache
+   * @param {Int} params.limitSize size limit (in number of cached elements)
    * @memberof LRU
    */
   constructor({ limitSize = 100 } = {}) {
