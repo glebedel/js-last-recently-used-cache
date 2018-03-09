@@ -1,19 +1,19 @@
-# lru-node
+# js-last-recently-used-cache
 
 [![Generated with nod](https://img.shields.io/badge/generator-nod-2196F3.svg?style=flat-square)](https://github.com/diegohaz/nod)
-[![NPM version](https://img.shields.io/npm/v/lru-node.svg?style=flat-square)](https://npmjs.org/package/lru-node)
+[![NPM version](https://img.shields.io/npm/v/js-last-recently-used-cache.svg?style=flat-square)](https://npmjs.org/package/js-last-recently-used-cache)
 [![Build Status](https://img.shields.io/travis/glebedel/js-last-recently-used-cache/master.svg?style=flat-square)](https://travis-ci.org/glebedel/js-last-recently-used-cache) [![Coverage Status](https://img.shields.io/codecov/c/github/glebedel/js-last-recently-used-cache/master.svg?style=flat-square)](https://codecov.io/gh/glebedel/js-last-recently-used-cache/branch/master)
 
 simple LRU cache implementation in javascript
 
 ## Install
 
-    $ npm install --save lru-node
+    $ npm install --save js-last-recently-used-cache
 
 ## Usage
 
 ```js
-import myModule from 'lru-node'
+import myModule from 'js-last-recently-used-cache'
 
 myModule()
 ```

@@ -44,7 +44,7 @@
     "testEnvironment": "node"
   },
   "keywords": [
-    "lru-node"
+    "js-last-recently-used-cache"
   ],
   "dependencies": {
     "debug": "^3.1.0",
