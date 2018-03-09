@@ -9,9 +9,9 @@ describe('instanciate class', () => {
 describe('adds elements within limits', () => {
   const instance = new LRU({ limitSize: 5 });
   it('adds', () => {
-    instance.add('1', 'one');
-    instance.add('2', 'two');
-    instance.add('3', 'three');
+    instance.set('1', 'one');
+    instance.set('2', 'two');
+    instance.set('3', 'three');
     expect(instance.size()).toBe(3);
   });
   it('gets most recently used node/key/value', () => {
@@ -35,17 +35,17 @@ describe('adds elements within limits', () => {
   it('hits the cache & bumped node if already in cache', () => {
     expect(LRU.getNodeValue(instance.list.first())).toBe('three');
     expect(LRU.getNodeValue(instance.list.last())).toBe('one');
-    const bumped = instance.add('1', 'one');
+    const bumped = instance.set('1', 'one');
     expect(bumped).toBe(instance.list.first());
     expect(LRU.getNodeValue(instance.list.first())).toBe('one');
   });
   it('keeps cache under its limit', () => {
-    instance.add('4', 'four');
-    instance.add('5', 'five');
+    instance.set('4', 'four');
+    instance.set('5', 'five');
     expect(instance.size()).toBe(5);
     const leastRecentKey = instance.leastRecentKey();
     expect(instance.hasKey(leastRecentKey)).toBe(true);
-    instance.add('6', 'six');
+    instance.set('6', 'six');
     expect(instance.size()).toBe(5);
     expect(instance.hasKey(leastRecentKey)).toBe(false);
     expect(instance.mostRecentKey()).toBe('6');
@@ -65,7 +65,7 @@ describe('adds elements within limits', () => {
     const currentSize = instance.size();
     const cacheMap = new Map();
     cacheMap.set('7', 'seven').set('8', 'eight');
-    instance.add(cacheMap.entries());
+    instance.set(cacheMap.entries());
     expect(instance.size()).toBe(currentSize + cacheMap.size);
     expect(instance.hasKey('7')).toBe(true);
     expect(instance.hasKey('8')).toBe(true);
