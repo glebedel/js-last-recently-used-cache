@@ -44,7 +44,7 @@ class LRU {
     this.map.set(key, bumpedNode);
     return bumpedNode;
   }
-  addSinglePair(key, value) {
+  setSinglePair(key, value) {
     let node;
     debug(`trying to add ${key} to the cache`);
     if (!this.hasKey(key)) {
@@ -61,14 +61,14 @@ class LRU {
     }
     return node;
   }
-  add(...args) {
+  set(...args) {
     // if only one argument and it has iterator then assume we are passed several key/value pair to cache
     if (args.length === 1 && typeof args[0][Symbol.iterator] === 'function') {
       // cache each key/value pair and return an array of all the nodes stored in the cache
-      return [...args[0]].map(([key, value]) => this.addSinglePair(key, value));
+      return [...args[0]].map(([key, value]) => this.setSinglePair(key, value));
     }
     // assume we only got one key/value and cache it
-    return this.addSinglePair(...args);
+    return this.setSinglePair(...args);
   }
   delete(key) {
     const node = this.getNode(key);
