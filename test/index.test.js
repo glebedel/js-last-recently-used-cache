@@ -15,20 +15,20 @@ describe('adds elements within limits', () => {
     expect(instance.size()).toBe(3);
   });
   it('gets most recently used node/key/value', () => {
-    const recentNode = instance.mostRecent();
+    const recentPair = instance.mostRecent();
     const recentKey = instance.mostRecentKey();
     const recentValue = instance.mostRecentValue();
-    expect(recentNode.data[0]).toBe(recentKey);
-    expect(recentNode.data[1]).toBe(recentValue);
+    expect(recentPair[0]).toBe(recentKey);
+    expect(recentPair[1]).toBe(recentValue);
     expect(recentValue).toBe('three');
     expect(recentKey).toBe('3');
   });
   it('gets least recently used node/key/value', () => {
-    const leastRecentNode = instance.leastRecent();
+    const leastRecentPair = instance.leastRecent();
     const leastRecentKey = instance.leastRecentKey();
     const leastRecentValue = instance.leastRecentValue();
-    expect(leastRecentNode.data[0]).toBe(leastRecentKey);
-    expect(leastRecentNode.data[1]).toBe(leastRecentValue);
+    expect(leastRecentPair[0]).toBe(leastRecentKey);
+    expect(leastRecentPair[1]).toBe(leastRecentValue);
     expect(leastRecentValue).toBe('one');
     expect(leastRecentKey).toBe('1');
   });
