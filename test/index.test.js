@@ -44,21 +44,21 @@ describe('adds elements within limits', () => {
     instance.set('5', 'five');
     expect(instance.size()).toBe(5);
     const leastRecentKey = instance.leastRecentKey();
-    expect(instance.hasKey(leastRecentKey)).toBe(true);
+    expect(instance.has(leastRecentKey)).toBe(true);
     instance.set('6', 'six');
     expect(instance.size()).toBe(5);
-    expect(instance.hasKey(leastRecentKey)).toBe(false);
+    expect(instance.has(leastRecentKey)).toBe(false);
     expect(instance.mostRecentKey()).toBe('6');
   });
   it('removes keys from cache', () => {
     const currentSize = instance.size();
-    expect(instance.hasKey('4')).toBe(true);
+    expect(instance.has('4')).toBe(true);
     instance.delete('4');
-    expect(instance.hasKey('4')).toBe(false);
+    expect(instance.has('4')).toBe(false);
     expect(instance.size()).toBe(currentSize - 1);
-    expect(instance.hasKey('3')).toBe(true);
+    expect(instance.has('3')).toBe(true);
     instance.delete('3');
-    expect(instance.hasKey('3')).toBe(false);
+    expect(instance.has('3')).toBe(false);
     expect(instance.size()).toBe(currentSize - 2);
   });
   it('adds an iterable object of key/pair', () => {
@@ -67,7 +67,7 @@ describe('adds elements within limits', () => {
     cacheMap.set('7', 'seven').set('8', 'eight');
     instance.set(cacheMap.entries());
     expect(instance.size()).toBe(currentSize + cacheMap.size);
-    expect(instance.hasKey('7')).toBe(true);
-    expect(instance.hasKey('8')).toBe(true);
+    expect(instance.has('7')).toBe(true);
+    expect(instance.has('8')).toBe(true);
   });
 });

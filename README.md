@@ -29,22 +29,22 @@ cache.has('1') // false (bumped out since cache has a size limit of 3)
 #### Table of Contents
 
 -   [LRU](#lru)
-    -   [hasKey](#haskey)
-    -   [getNode](#getnode)
-    -   [pop](#pop)
-    -   [bump](#bump)
-    -   [bumpNode](#bumpnode)
-    -   [setSinglePair](#setsinglepair)
+    -   [has](#has)
     -   [set](#set)
-    -   [delete](#delete)
     -   [get](#get)
     -   [size](#size)
+    -   [delete](#delete)
     -   [mostRecentKey](#mostrecentkey)
     -   [leastRecentKey](#leastrecentkey)
     -   [mostRecentValue](#mostrecentvalue)
     -   [leastRecentValue](#leastrecentvalue)
     -   [mostRecent](#mostrecent)
     -   [leastRecent](#leastrecent)
+    -   [pop](#pop)
+    -   [bump](#bump)
+    -   [bumpNode](#bumpnode)
+    -   [setSinglePair](#setsinglepair)
+    -   [getNode](#getnode)
     -   [getNodeValue](#getnodevalue)
     -   [getNodeKey](#getnodekey)
 
@@ -55,7 +55,7 @@ cache.has('1') // false (bumped out since cache has a size limit of 3)
 -   `params.limitSize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** size limit (in number of cached elements) (optional, default `{}`)
     -   `params.limitSize.limitSize`   (optional, default `100`)
 
-#### hasKey
+#### has
 
 check if cache contains specific key
 
@@ -65,15 +65,77 @@ check if cache contains specific key
 
 Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not key is in cache
 
-#### getNode
+#### set
 
-gets the double linked list's node corresponding to specific key
+set new data into the cache
 
 **Parameters**
 
--   `key` **any** cached element key
+-   `args` **...any** 
+-   `key/value` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any> | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any>>)** pair(s) to store in cache
 
-Returns **[Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)** 
+Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)> | [Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling))** node(s) inserted in doubly linked list
+
+#### get
+
+Get the data stored in cache by its key
+
+**Parameters**
+
+-   `key` **any** identifier of the data to get from cache
+
+Returns **any** data stored in cache for specified key
+
+#### size
+
+gets the number of items in the cache
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+#### delete
+
+delete a specific value from the cache by its key
+(delets it from the hashmap and the doubly linked list)
+
+**Parameters**
+
+-   `key` **any** to delete from cache
+
+#### mostRecentKey
+
+Gets the identifier (key) of the last recently used key/value pair stored in cache
+
+Returns **any** 
+
+#### leastRecentKey
+
+Gets the identifier (key) of the least recently used key/value pair stored in cache
+
+Returns **any** 
+
+#### mostRecentValue
+
+Gets most recently used value stored in cache
+
+Returns **any** 
+
+#### leastRecentValue
+
+Gets most recently used value stored in cache
+
+Returns **any** 
+
+#### mostRecent
+
+Gets most recently used key/value pair stored in cache
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any>** array with key of cached data at index `0` and value at index `1`
+
+#### leastRecent
+
+Gets least recently used key/value pair stored in cache
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any>** array with key of cached data at index `0` and value at index `1`
 
 #### pop
 
@@ -112,77 +174,15 @@ set a single key/value pair in the cache
 
 Returns **[Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)** node created in doubly linked list with data property being an array of [key,value]
 
-#### set
+#### getNode
 
-set new data into the cache
-
-**Parameters**
-
--   `args` **...any** 
--   `key/value` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any> | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any>>)** pair(s) to store in cache
-
-Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)> | [Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling))** node(s) inserted in doubly linked list
-
-#### delete
-
-delete a specific value from the cache by its key
-(delets it from the hashmap and the doubly linked list)
+gets the double linked list's node corresponding to specific key
 
 **Parameters**
 
--   `key` **any** to delete from cache
+-   `key` **any** cached element key
 
-#### get
-
-Get the data stored in cache by its key
-
-**Parameters**
-
--   `key` **any** identifier of the data to get from cache
-
-Returns **any** data stored in cache for specified key
-
-#### size
-
-gets the number of items in the cache
-
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
-
-#### mostRecentKey
-
-Gets the identifier (key) of the last recently used key/value pair stored in cache
-
-Returns **any** 
-
-#### leastRecentKey
-
-Gets the identifier (key) of the least recently used key/value pair stored in cache
-
-Returns **any** 
-
-#### mostRecentValue
-
-Gets most recently used value stored in cache
-
-Returns **any** 
-
-#### leastRecentValue
-
-Gets most recently used value stored in cache
-
-Returns **any** 
-
-#### mostRecent
-
-Gets most recently used key/value pair stored in cache
-
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any>** array with key of cached data at index `0` and value at index `1`
-
-#### leastRecent
-
-Gets least recently used key/value pair stored in cache
-
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any, any>** array with key of cached data at index `0` and value at index `1`
+Returns **[Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)** 
 
 #### getNodeValue
 

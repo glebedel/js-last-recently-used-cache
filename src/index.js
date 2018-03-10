@@ -25,78 +25,8 @@ class LRU {
    * @returns {Boolean} whether or not key is in cache
    * @memberof LRU
    */
-  hasKey(key) {
+  has(key) {
     return this.map.has(key);
-  }
-  /**
-   * gets the double linked list's node corresponding to specific key
-   * @param {any} key cached element key
-   * @returns {Node}
-   * @memberof LRU
-   */
-  getNode(key) {
-    return this.map.get(key);
-  }
-  /**
-   * pop the least recently used key/value in the cache
-   * (pops the last element of the double linked list and removes it from hashmap)
-   * @memberof LRU
-   */
-  pop() {
-    const toRemove = this.list.rpop();
-    const key = this.constructor.getNodeKey(toRemove);
-    debug(`key "${key}" removed from cache`);
-    this.map.delete(key);
-  }
-  /**
-   * bump a specific cached data to last recently used
-   * (adds it to front of the double linked list list)
-   * @param {any} key key of the data to bump
-   * @returns {Node} new node created at the front of the list with the same cached data
-   * @memberof LRU
-   */
-  bump(key) {
-    const node = this.getNode(key);
-    debug(`bump "${key}" to last recently used status`);
-    return this.bumpNode(node);
-  }
-  /**
-   * bump a specific node to last recently used (front of the linked list)
-   *
-   * @param {Node} node node to bump to front of list
-   * @returns {Node} new node placed at front of list with data of passed node (passed nodeis removed)
-   * @memberof LRU
-   */
-  bumpNode(node) {
-    const [key, value] = node.data;
-    this.list.remove(node);
-    const bumpedNode = this.list.ladd([key, value]);
-    this.map.set(key, bumpedNode);
-    return bumpedNode;
-  }
-  /**
-   * set a single key/value pair in the cache
-   * @param {any} key to identify the data with
-   * @param {any} value value to store in cache
-   * @returns {Node} node created in doubly linked list with data property being an array of [key,value]
-   * @memberof LRU
-   */
-  setSinglePair(key, value) {
-    let node;
-    debug(`trying to add ${key} to the cache`);
-    if (!this.hasKey(key)) {
-      if (this.limitSize && this.list.length >= this.limitSize) {
-        debug(`hit cache limit when inserting "${key}"`);
-        this.pop();
-      }
-      debug(`adding "${key}" in cache`);
-      node = this.list.ladd([key, value]);
-      this.map.set(key, node);
-    } else {
-      debug(`hit cache for "${key}"`);
-      node = this.bump(key);
-    }
-    return node;
   }
   /**
    * set new data into the cache
@@ -113,19 +43,6 @@ class LRU {
     }
     // assume we only got one key/value and cache it
     return this.setSinglePair(...args);
-  }
-  /**
-   * delete a specific value from the cache by its key
-   * (delets it from the hashmap and the doubly linked list)
-   * @param {any} key to delete from cache
-   * @memberof LRU
-   */
-  delete(key) {
-    const node = this.getNode(key);
-    if (node) {
-      this.list.remove(node);
-      this.map.delete(key);
-    }
   }
   /**
    * Get the data stored in cache by its key
@@ -147,6 +64,19 @@ class LRU {
    */
   size() {
     return this.map.size;
+  }
+  /**
+   * delete a specific value from the cache by its key
+   * (delets it from the hashmap and the doubly linked list)
+   * @param {any} key to delete from cache
+   * @memberof LRU
+   */
+  delete(key) {
+    const node = this.getNode(key);
+    if (node) {
+      this.list.remove(node);
+      this.map.delete(key);
+    }
   }
   /**
    * Gets the identifier (key) of the last recently used key/value pair stored in cache
@@ -195,6 +125,76 @@ class LRU {
    */
   leastRecent() {
     return this.list.last().data;
+  }
+  /**
+   * pop the least recently used key/value in the cache
+   * (pops the last element of the double linked list and removes it from hashmap)
+   * @memberof LRU
+   */
+  pop() {
+    const toRemove = this.list.rpop();
+    const key = this.constructor.getNodeKey(toRemove);
+    debug(`key "${key}" removed from cache`);
+    this.map.delete(key);
+  }
+  /**
+   * bump a specific cached data to last recently used
+   * (adds it to front of the double linked list list)
+   * @param {any} key key of the data to bump
+   * @returns {Node} new node created at the front of the list with the same cached data
+   * @memberof LRU
+   */
+  bump(key) {
+    const node = this.getNode(key);
+    debug(`bump "${key}" to last recently used status`);
+    return this.bumpNode(node);
+  }
+  /**
+   * bump a specific node to last recently used (front of the linked list)
+   *
+   * @param {Node} node node to bump to front of list
+   * @returns {Node} new node placed at front of list with data of passed node (passed nodeis removed)
+   * @memberof LRU
+   */
+  bumpNode(node) {
+    const [key, value] = node.data;
+    this.list.remove(node);
+    const bumpedNode = this.list.ladd([key, value]);
+    this.map.set(key, bumpedNode);
+    return bumpedNode;
+  }
+  /**
+   * set a single key/value pair in the cache
+   * @param {any} key to identify the data with
+   * @param {any} value value to store in cache
+   * @returns {Node} node created in doubly linked list with data property being an array of [key,value]
+   * @memberof LRU
+   */
+  setSinglePair(key, value) {
+    let node;
+    debug(`trying to add ${key} to the cache`);
+    if (!this.has(key)) {
+      if (this.limitSize && this.list.length >= this.limitSize) {
+        debug(`hit cache limit when inserting "${key}"`);
+        this.pop();
+      }
+      debug(`adding "${key}" in cache`);
+      node = this.list.ladd([key, value]);
+      this.map.set(key, node);
+    } else {
+      debug(`hit cache for "${key}"`);
+      node = this.bump(key);
+    }
+    return node;
+  }
+  /**
+   * gets the double linked list's node corresponding to specific key
+   * @param {any} key cached element key
+   * @returns {Node}
+   * @memberof LRU
+   */
+  getNode(key) {
+    return this.map.get(key);
   }
   /**
    * gets the value of a specific node from the doubly linked list
