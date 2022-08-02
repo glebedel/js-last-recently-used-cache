@@ -15,8 +15,8 @@ const cache = new LRU({limitSize: 3});
 cache.set('1', 'one')
 cache.set('2', 'two')
 cache.set('3', 'three')
-cache.get('3') // 'three'
 cache.get('1') // 'one'
+cache.get('3') // 'three'
 cache.set('4', 'four');
 cache.get('4') //four
 cache.has('1') // false (bumped out since cache has a size limit of 3)
