@@ -9,7 +9,7 @@ simple LRU cache implementation in javascript. It uses a doubly linked list (`in
 ## Usage
 
 ```js
-import LRY from 'js-last-recently-used-cache'
+import LRU from 'js-last-recently-used-cache'
 
 const cache = new LRU({limitSize: 3});
 cache.set('1', 'one')
